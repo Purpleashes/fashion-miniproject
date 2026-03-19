@@ -1,0 +1,304 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  margin: 20rpx;
+  padding: 20rpx 30rpx;
+  border-radius: 50rpx;
+  flex-shrink: 0;
+}
+
+.search-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.search-placeholder {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.category-wrapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* 左侧分类 */
+.category-left {
+  width: 180rpx;
+  height: 100%;
+  background: #f8f8f8;
+}
+
+.category-item {
+  position: relative;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.category-item.active {
+  background: white;
+  color: #ff4d6d;
+  font-weight: 600;
+}
+
+.active-line {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 40rpx;
+  background: #ff4d6d;
+  border-radius: 0 4rpx 4rpx 0;
+}
+
+/* 右侧内容 */
+.category-right {
+  flex: 1;
+  height: 100%;
+  background: white;
+  padding: 20rpx;
+}
+
+.category-banner {
+  width: 100%;
+  height: 200rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+}
+
+.sub-category {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30rpx;
+}
+
+.sub-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.sub-icon {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  margin-bottom: 12rpx;
+}
+
+.sub-name {
+  font-size: 24rpx;
+  color: #333;
+}
+
+/* 品牌推荐 */
+.brand-section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.brand-list {
+  display: flex;
+  white-space: nowrap;
+}
+
+.brand-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 140rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx;
+  border: 2rpx solid #f0f0f0;
+}
+
+.brand-name {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 筛选排序 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 20rpx;
+}
+
+.filter-item {
+  font-size: 26rpx;
+  color: #666;
+  position: relative;
+}
+
+.filter-item.active {
+  color: #ff4d6d;
+}
+
+.price-arrow {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 4rpx;
+  font-size: 20rpx;
+  line-height: 1;
+}
+
+.price-arrow .arrow {
+  color: #ccc;
+}
+
+.price-arrow .arrow.active {
+  color: #ff4d6d;
+}
+
+/* 商品列表 */
+.product-list {
+  padding-bottom: 40rpx;
+}
+
+.product-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  overflow: hidden;
+  padding: 20rpx;
+}
+
+.product-img {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.product-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-name {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-name .tag {
+  display: inline-block;
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 4rpx;
+  margin-right: 8rpx;
+  vertical-align: middle;
+}
+
+.product-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.product-price {
+  display: flex;
+  align-items: baseline;
+}
+
+.product-price .symbol {
+  font-size: 22rpx;
+  color: #ff4d6d;
+  margin-right: 4rpx;
+}
+
+.product-price .price {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #ff4d6d;
+}
+
+.product-price .original {
+  font-size: 22rpx;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 12rpx;
+}
+
+.product-sales {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.no-more {
+  text-align: center;
+  padding: 40rpx 0;
+  font-size: 24rpx;
+  color: #ccc;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-img {
+  width: 200rpx;
+  height: 200rpx;
+  opacity: 0.3;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #ccc;
+}

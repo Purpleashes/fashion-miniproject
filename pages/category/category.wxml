@@ -1,0 +1,96 @@
+<view class="container">
+  <!-- 顶部搜索 -->
+  <view class="search-bar" bindtap="goToSearch">
+    <image src="/images/common/search-icon.png" class="search-icon"></image>
+    <text class="search-placeholder">搜索商品</text>
+  </view>
+
+  <view class="category-wrapper">
+    <!-- 左侧分类 -->
+    <scroll-view class="category-left" scroll-y>
+      <view class="category-item {{currentCategory === item.id ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="id"
+            bindtap="selectCategory"
+            data-id="{{item.id}}">
+        <text>{{item.name}}</text>
+        <view class="active-line" wx:if="{{currentCategory === item.id}}"></view>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧内容 -->
+    <scroll-view class="category-right" scroll-y>
+      <!-- 分类 banner -->
+      <view class="category-banner" wx:if="{{currentCategoryData.banner}}">
+        <image src="{{currentCategoryData.banner}}" class="banner-img"></image>
+      </view>
+
+      <!-- 二级分类 -->
+      <view class="sub-category" wx:if="{{currentCategoryData.children && currentCategoryData.children.length > 0}}">
+        <view class="sub-item" wx:for="{{currentCategoryData.children}}" wx:key="id" bindtap="goToSubCategory" data-id="{{item.id}}">
+          <image src="{{item.icon}}" class="sub-icon"></image>
+          <text class="sub-name">{{item.name}}</text>
+        </view>
+      </view>
+
+      <!-- 品牌推荐 -->
+      <view class="brand-section" wx:if="{{brands.length > 0}}">
+        <view class="section-title">品牌推荐</view>
+        <scroll-view class="brand-list" scroll-x show-scrollbar="{{false}}">
+          <view class="brand-item" wx:for="{{brands}}" wx:key="id" bindtap="selectBrand" data-id="{{item.id}}">
+            <image src="{{item.logo}}" class="brand-logo"></image>
+            <text class="brand-name">{{item.name}}</text>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 筛选排序 -->
+      <view class="filter-bar">
+        <view class="filter-item {{sortType === 'default' ? 'active' : ''}}" bindtap="setSort" data-type="default">综合</view>
+        <view class="filter-item {{sortType === 'sales' ? 'active' : ''}}" bindtap="setSort" data-type="sales">销量</view>
+        <view class="filter-item {{sortType === 'price' ? 'active' : ''}}" bindtap="setSort" data-type="price">
+          <text>价格</text>
+          <view class="price-arrow" wx:if="{{sortType === 'price'}}">
+            <text class="arrow {{priceOrder === 'asc' ? 'active' : ''}}">↑</text>
+            <text class="arrow {{priceOrder === 'desc' ? 'active' : ''}}">↓</text>
+          </view>
+        </view>
+        <view class="filter-item" bindtap="openFilter">筛选</view>
+      </view>
+
+      <!-- 商品列表 -->
+      <view class="product-list">
+        <view class="product-item" wx:for="{{products}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+          <image src="{{item.images[0]}}" class="product-img"></image>
+          <view class="product-info">
+            <view class="product-name">
+              <text class="tag tag-hot" wx:if="{{item.isHot}}">热销</text>
+              <text class="tag tag-new" wx:if="{{item.isNew}}">新品</text>
+              {{item.name}}
+            </view>
+            <view class="product-desc">{{item.desc}}</view>
+            <view class="product-bottom">
+              <view class="product-price">
+                <text class="symbol">¥</text>
+                <text class="price">{{item.price}}</text>
+                <text class="original" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
+              </view>
+              <view class="product-sales">{{item.sales}}人付款</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 没有更多 -->
+      <view class="no-more" wx:if="{{products.length > 0 && !hasMore}}">
+        <text>— 没有更多了 —</text>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty" wx:if="{{products.length === 0}}">
+        <image src="/images/empty.png" class="empty-img"></image>
+        <text class="empty-text">暂无商品</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,117 @@
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section" bindtap="{{!isLogin ? 'goToLogin' : ''}}">
+    <image src="{{isLogin ? userInfo.avatar : '/images/profile/default-avatar.png'}}" class="user-avatar"></image>
+    <view class="user-info">
+      <view class="user-name">{{isLogin ? userInfo.name : '点击登录'}}</view>
+      <view class="user-desc" wx:if="{{isLogin}}">{{userInfo.desc}}</view>
+    </view>
+    <image wx:if="{{isLogin}}" src="/images/profile/setting.png" class="setting-icon" bindtap="goToSetting"></image>
+  </view>
+
+  <!-- 订单入口 -->
+  <view class="order-section">
+    <view class="section-header" bindtap="goToAllOrders">
+      <text class="section-title">我的订单</text>
+      <text class="section-more">全部订单 ></text>
+    </view>
+    <view class="order-tabs">
+      <view class="order-tab" bindtap="goToOrder" data-status="pending">
+        <image src="/images/profile/order-pending.png" class="tab-icon"></image>
+        <text class="tab-text">待付款</text>
+        <view class="tab-badge" wx:if="{{orderCount.pending > 0}}">{{orderCount.pending}}</view>
+      </view>
+      <view class="order-tab" bindtap="goToOrder" data-status="shipped">
+        <image src="/images/profile/order-shipped.png" class="tab-icon"></image>
+        <text class="tab-text">待发货</text>
+        <view class="tab-badge" wx:if="{{orderCount.shipped > 0}}">{{orderCount.shipped}}</view>
+      </view>
+      <view class="order-tab" bindtap="goToOrder" data-status="delivered">
+        <image src="/images/profile/order-delivered.png" class="tab-icon"></image>
+        <text class="tab-text">待收货</text>
+        <view class="tab-badge" wx:if="{{orderCount.delivered > 0}}">{{orderCount.delivered}}</view>
+      </view>
+      <view class="order-tab" bindtap="goToOrder" data-status="review">
+        <image src="/images/profile/order-review.png" class="tab-icon"></image>
+        <text class="tab-text">待评价</text>
+        <view class="tab-badge" wx:if="{{orderCount.review > 0}}">{{orderCount.review}}</view>
+      </view>
+      <view class="order-tab" bindtap="goToOrder" data-status="refund">
+        <image src="/images/profile/order-refund.png" class="tab-icon"></image>
+        <text class="tab-text">退款/售后</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的资产 -->
+  <view class="assets-section">
+    <view class="section-header">
+      <text class="section-title">我的资产</text>
+    </view>
+    <view class="assets-list">
+      <view class="asset-item" bindtap="goToPage" data-url="/pages/coupon/coupon">
+        <text class="asset-value">{{userAssets.coupons}}</text>
+        <text class="asset-label">优惠券</text>
+      </view>
+      <view class="asset-item" bindtap="goToPage" data-url="/pages/balance/balance">
+        <text class="asset-value">¥{{userAssets.balance}}</text>
+        <text class="asset-label">余额</text>
+      </view>
+      <view class="asset-item" bindtap="goToPage" data-url="/pages/points/points">
+        <text class="asset-value">{{userAssets.points}}</text>
+        <text class="asset-label">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的收藏/足迹 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/favorites/favorites">
+      <image src="/images/profile/menu-favorite.png" class="menu-icon"></image>
+      <text class="menu-text">我的收藏</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/history/history">
+      <image src="/images/profile/menu-history.png" class="menu-icon"></image>
+      <text class="menu-text">浏览足迹</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/address/address">
+      <image src="/images/profile/menu-address.png" class="menu-icon"></image>
+      <text class="menu-text">收货地址</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+  </view>
+
+  <!-- 帮助与服务 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/service/service">
+      <image src="/images/profile/menu-service.png" class="menu-icon"></image>
+      <text class="menu-text">联系客服</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/help/help">
+      <image src="/images/profile/menu-help.png" class="menu-icon"></image>
+      <text class="menu-text">帮助中心</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/feedback/feedback">
+      <image src="/images/profile/menu-feedback.png" class="menu-icon"></image>
+      <text class="menu-text">意见反馈</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-url="/pages/about/about">
+      <image src="/images/profile/menu-about.png" class="menu-icon"></image>
+      <text class="menu-text">关于我们</text>
+      <image src="/images/common/arrow-right.png" class="menu-arrow"></image>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-btn" wx:if="{{isLogin}}" bindtap="doLogout">
+    退出登录
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-space"></view>
+</view>

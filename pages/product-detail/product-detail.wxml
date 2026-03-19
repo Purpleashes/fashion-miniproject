@@ -1,0 +1,177 @@
+<view class="container">
+  <!-- 商品图片轮播 -->
+  <swiper class="image-swiper" indicator-dots circular indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#ff4d6d">
+    <swiper-item wx:for="{{product.images}}" wx:key="index">
+      <image src="{{item}}" mode="aspectFill" class="product-image"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 返回和分享 -->
+  <view class="top-nav">
+    <view class="nav-btn" bindtap="goBack">
+      <image src="/images/common/back.png" class="nav-icon"></image>
+    </view>
+    <view class="nav-btn" bindtap="shareProduct">
+      <image src="/images/common/share.png" class="nav-icon"></image>
+    </view>
+  </view>
+
+  <!-- 商品信息 -->
+  <view class="product-info">
+    <view class="price-row">
+      <view class="price">
+        <text class="symbol">¥</text>
+        <text class="value">{{product.price}}</text>
+      </view>
+      <text class="original-price" wx:if="{{product.originalPrice}}">¥{{product.originalPrice}}</text>
+      <text class="discount" wx:if="{{product.discount}}">{{product.discount}}折</text>
+      <view class="sales-tag" wx:if="{{product.sales > 1000}}">爆款</view>
+    </view>
+
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-desc">{{product.desc}}</view>
+
+    <view class="tags-row">
+      <text class="tag" wx:for="{{product.tags}}" wx:key="index">{{item}}</text>
+    </view>
+
+    <view class="sales-info">
+      <text>已售 {{product.sales}} 件</text>
+      <text>|</text>
+      <text>快递: {{product.shipping}}</text>
+      <text>|</text>
+      <text>{{product.service}}</text>
+    </view>
+  </view>
+
+  <!-- 选择规格 -->
+  <view class="spec-section" bindtap="openSpecModal">
+    <view class="spec-label">选择</view>
+    <view class="spec-value">{{selectedSpec || '请选择颜色、尺码'}}</view>
+    <image src="/images/common/arrow-right.png" class="arrow-icon"></image>
+  </view>
+
+  <!-- 评价区域 -->
+  <view class="review-section">
+    <view class="section-header">
+      <text class="section-title">商品评价 ({{reviews.length}})</text>
+      <text class="section-more" bindtap="viewAllReviews">查看全部 ></text>
+    </view>
+    <view class="review-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{reviewStats.good}}%</text>
+        <text class="stat-label">好评</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{reviewStats.withImage}}</text>
+        <text class="stat-label">晒图</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{reviewStats.repeat}}</text>
+        <text class="stat-label">回头客</text>
+      </view>
+    </view>
+    <view class="review-list">
+      <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+        <view class="review-user">
+          <image src="{{item.avatar}}" class="user-avatar"></image>
+          <text class="user-name">{{item.name}}</text>
+          <text class="review-time">{{item.time}}</text>
+        </view>
+        <view class="review-spec" wx:if="{{item.spec}}">{{item.spec}}</view>
+        <view class="review-content">{{item.content}}</view>
+        <view class="review-images" wx:if="{{item.images && item.images.length > 0}}">
+          <image wx:for="{{item.images}}" wx:for-item="img" wx:key="index" src="{{img}}" class="review-image"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 详情图片 -->
+  <view class="detail-images">
+    <view class="section-title">商品详情</view>
+    <image wx:for="{{detailImages}}" wx:key="index" src="{{item}}" class="detail-image" mode="widthFix"></image>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-area-bottom">
+    <view class="bar-left">
+      <view class="bar-item" bindtap="goHome">
+        <image src="/images/common/home.png" class="bar-icon"></image>
+        <text>首页</text>
+      </view>
+      <view class="bar-item" bindtap="toggleFavorite">
+        <image src="{{isFavorite ? '/images/common/favorite-active.png' : '/images/common/favorite.png'}}" class="bar-icon"></image>
+        <text>收藏</text>
+      </view>
+      <view class="bar-item" bindtap="goToCart">
+        <image src="/images/common/cart.png" class="bar-icon"></image>
+        <text>购物车</text>
+        <view class="cart-badge" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+      </view>
+    </view>
+    <view class="bar-right">
+      <view class="btn btn-cart" bindtap="openSpecModal" data-type="cart">加入购物车</view>
+      <view class="btn btn-buy" bindtap="openSpecModal" data-type="buy">立即购买</view>
+    </view>
+  </view>
+
+  <!-- 规格选择弹窗 -->
+  <view class="spec-modal-mask" wx:if="{{showSpecModal}}" bindtap="closeSpecModal"></view>
+  <view class="spec-modal {{showSpecModal ? 'show' : ''}}">
+    <view class="modal-header">
+      <image src="{{product.images[0]}}" class="modal-image"></image>
+      <view class="modal-info">
+        <view class="modal-price">¥{{product.price}}</view>
+        <view class="modal-stock">库存 {{product.stock}} 件</view>
+        <view class="modal-selected" wx:if="{{selectedSpec}}">已选: {{selectedSpec}}</view>
+      </view>
+      <view class="modal-close" bindtap="closeSpecModal">
+        <image src="/images/common/close.png" class="close-icon"></image>
+      </view>
+    </view>
+    <scroll-view class="modal-body" scroll-y>
+      <!-- 颜色选择 -->
+      <view class="spec-group">
+        <view class="spec-group-title">颜色</view>
+        <view class="spec-options">
+          <view class="spec-option {{selectedColor === item ? 'active' : ''}}"
+                wx:for="{{colors}}"
+                wx:key="index"
+                bindtap="selectColor"
+                data-color="{{item}}">
+            <image src="{{colorImages[item]}}" class="color-image" wx:if="{{colorImages[item]}}"></image>
+            <text>{{item}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 尺码选择 -->
+      <view class="spec-group">
+        <view class="spec-group-title">尺码</view>
+        <view class="spec-options">
+          <view class="spec-option {{selectedSize === item ? 'active' : ''}}"
+                wx:for="{{sizes}}"
+                wx:key="index"
+                bindtap="selectSize"
+                data-size="{{item}}">
+            <text>{{item}}</text>
+            <text class="size-tip" wx:if="{{sizeTips[item]}}">{{sizeTips[item]}}</text>
+          </view>
+        </view>
+        <view class="size-guide" bindtap="showSizeGuide">尺码指南 ></view>
+      </view>
+      <!-- 数量选择 -->
+      <view class="spec-group">
+        <view class="spec-group-title">数量</view>
+        <view class="quantity-selector">
+          <view class="quantity-btn" bindtap="decreaseQuantity">-</view>
+          <text class="quantity-value">{{quantity}}</text>
+          <view class="quantity-btn" bindtap="increaseQuantity">+</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="modal-footer safe-area-bottom">
+      <view class="btn btn-primary" bindtap="confirmSpec">{{modalActionType === 'cart' ? '加入购物车' : '立即购买'}}</view>
+    </view>
+  </view>
+</view>

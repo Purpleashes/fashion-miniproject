@@ -1,0 +1,136 @@
+<view class="container">
+  <!-- 顶部搜索栏 -->
+  <view class="search-bar" bindtap="goToSearch">
+    <image src="/images/common/search-icon.png" class="search-icon"></image>
+    <text class="search-placeholder">搜索商品</text>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner-swiper" indicator-dots autoplay interval="4000" circular indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#ff4d6d">
+    <swiper-item wx:for="{{banners}}" wx:key="id" bindtap="onBannerTap" data-id="{{item.id}}">
+      <image src="{{item.image}}" mode="aspectFill" class="banner-image"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 快捷入口 -->
+  <view class="quick-nav">
+    <view class="nav-item" wx:for="{{quickNavs}}" wx:key="id" bindtap="onNavTap" data-id="{{item.id}}" data-type="{{item.type}}">
+      <image src="{{item.icon}}" class="nav-icon"></image>
+      <text class="nav-text">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 限时秒杀 -->
+  <view class="section" wx:if="{{flashSale.length > 0}}">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-dot"></text>
+        <text>限时秒杀</text>
+        <view class="countdown">
+          <text class="countdown-num">{{countdown.hours}}</text>
+          <text class="countdown-colon">:</text>
+          <text class="countdown-num">{{countdown.minutes}}</text>
+          <text class="countdown-colon">:</text>
+          <text class="countdown-num">{{countdown.seconds}}</text>
+        </view>
+      </view>
+      <text class="section-more" bindtap="goToFlashSale">更多 ></text>
+    </view>
+    <scroll-view class="flash-list" scroll-x show-scrollbar="{{false}}">
+      <view class="flash-item" wx:for="{{flashSale}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <image src="{{item.image}}" class="flash-image"></image>
+        <view class="flash-price">
+          <text class="flash-price-value">¥{{item.price}}</text>
+          <text class="flash-price-original">¥{{item.originalPrice}}</text>
+        </view>
+        <view class="flash-progress">
+          <view class="flash-progress-bar" style="width: {{item.progress}}%"></view>
+          <text class="flash-progress-text">已抢{{item.progress}}%</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 新品上市 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-dot"></text>
+        <text>新品上市</text>
+      </view>
+      <text class="section-more" bindtap="goToNewArrivals">更多 ></text>
+    </view>
+    <view class="new-arrival">
+      <view class="new-item big" wx:if="{{newProducts[0]}}" bindtap="goToDetail" data-id="{{newProducts[0].id}}">
+        <image src="{{newProducts[0].images[0]}}" class="new-image"></image>
+        <view class="new-tag">NEW</view>
+        <view class="new-info">
+          <view class="new-name">{{newProducts[0].name}}</view>
+          <view class="new-price">¥{{newProducts[0].price}}</view>
+        </view>
+      </view>
+      <view class="new-small-list">
+        <view class="new-item small" wx:for="{{newProducts.slice(1, 5)}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+          <image src="{{item.images[0]}}" class="new-image"></image>
+          <view class="new-info">
+            <view class="new-name">{{item.name}}</view>
+            <view class="new-price">¥{{item.price}}</view>
+          </view>
+        </view>
+      </div>
+    </view>
+  </view>
+
+  <!-- 热销榜单 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-dot"></text>
+        <text>热销榜单</text>
+      </view>
+    </view>
+    <scroll-view class="hot-list" scroll-x show-scrollbar="{{false}}">
+      <view class="hot-item" wx:for="{{hotProducts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="hot-rank">{{index + 1}}</view>
+        <image src="{{item.images[0]}}" class="hot-image"></image>
+        <view class="hot-info">
+          <view class="hot-name">{{item.name}}</view>
+          <view class="hot-sales">已售{{item.sales}}件</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 推荐商品 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="title-dot"></text>
+        <text>为你推荐</text>
+      </view>
+    </view>
+    <view class="product-grid">
+      <view class="product-item" wx:for="{{recommendProducts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="product-image-wrapper">
+          <image src="{{item.images[0]}}" class="product-image"></image>
+          <view class="product-tags" wx:if="{{item.tags}}">
+            <text class="tag tag-{{item.tags[0]}}" wx:if="{{item.tags[0]}}">{{item.tagTexts[0]}}</text>
+          </view>
+        </view>
+        <view class="product-info">
+          <view class="product-name">{{item.name}}</view>
+          <view class="product-price-row">
+            <view class="price">
+              <span class="price-symbol">¥</span>
+              <span class="price-value">{{item.price}}</span>
+            </view>
+            <text class="product-sales">{{item.sales}}人付款</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-space"></view>
+</view>
